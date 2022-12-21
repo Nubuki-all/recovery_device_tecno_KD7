@@ -15,13 +15,25 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+# Release name
+PRODUCT_RELEASE_NAME := TECNO-KD7
 
 # Inherit from those products. Most specific first.
 $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
-$(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base.mk)
+$(call inherit-product-if-exists, $(SRC_TARGET_DIR)/product/embedded.mk)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
+# $(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base.mk)
 
-# Inherit some common Omni stuff.
-$(call inherit-product, vendor/omni/config/common.mk)
+# Inherit some common Pitchblack stuff.
+$(call inherit-product, vendor/pb/config/common.mk)
+
+PRODUCT_COPY_FILES += $(call find-copy-subdir-files,*,$(LOCAL_PATH)/recovery/root,recovery/root)
+
+# Fastbootd
+PRODUCT_PACKAGES += \
+    android.hardware.fastboot@1.0-impl-mock \
+    fastbootd
 
 # Device identifier. This must come after all inclusions
 PRODUCT_DEVICE := KD7
@@ -35,12 +47,8 @@ PRODUCT_RELEASE_NAME := TECNO Spark 5 Pro
 PRODUCT_USE_DYNAMIC_PARTITIONS := true
 
 # VNDK
-PRODUCT_TARGET_VNDK_VERSION := 29
+# PRODUCT_TARGET_VNDK_VERSION := 29
 
 # API
-PRODUCT_SHIPPING_API_LEVEL := 29
+# PRODUCT_SHIPPING_API_LEVEL := 29
 
-# Fastbootd
-PRODUCT_PACKAGES += \
-    android.hardware.fastboot@1.0-impl-mock \
-    fastbootd
