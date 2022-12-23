@@ -148,6 +148,9 @@ TW_EXTERNAL_STORAGE_MOUNT_POINT := "external_sd"
 # Exclude
 TW_EXCLUDE_TWRPAPP := true
 
+# Fstab
+TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery/root/system/etc/recovery.fstab
+
 # Debug
 TWRP_INCLUDE_LOGCAT := true
 TARGET_USES_LOGD := true
